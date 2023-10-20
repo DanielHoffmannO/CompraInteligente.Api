@@ -26,16 +26,25 @@ public class EstimativaService : IEstimativaService
         List<CompraInteligenteLog> log = new() { new("Inicio", $"Mês: {mes}") };
         try
         {
+            _WsChatGpt.InjetarComfiguracao(_configuracaoService.ObterConfiguracao());
             var listHistorico = _historicoRepository.GetAll();
             log.Add(new("Histórico", $"QuantidadeHistórico: {listHistorico.Count}"));
 
             var dto = new List<EstimativaDto>();
             foreach (var HistoricoProduto in listHistorico.GroupBy(x => x.Produto).ToList())
             {
-                var produto = HistoricoProduto.First().Produto;
-                var Quantidade = (short)(HistoricoProduto.Sum(x => x.Quantidade) / HistoricoProduto.Count());
-                log.Add(new("Informação", $"Produto: {produto} || Quantidade: {Quantidade}"));
-                dto.Add(new(produto, Quantidade));
+                try
+                {
+                    var produto = HistoricoProduto.First().Produto;
+                    var Quantidade = await _WsChatGpt.EstimarGpt(JsonSerializer.Serialize(HistoricoProduto), mes);
+                    await Task.Delay(100);
+                    log.Add(new("Informação", $"Produto: {produto} || Quantidade: {Quantidade}"));
+                    dto.Add(new(produto, short.Parse(Quantidade.Replace("\n", ""))));
+                }
+                catch (Exception)
+                {
+
+                }
             }
 
             log.Add(new("Estimativa", $"QuantidadeEstimativa: {dto.Count}"));
@@ -49,11 +58,5 @@ public class EstimativaService : IEstimativaService
             _LogRepository.SalvarLista(log);
             throw;
         }
-    }
-
-    private async Task<string> IntegracaoChatGpt(string PalavraChave)
-    {
-        _WsChatGpt.InjetarComfiguracao(_configuracaoService.ObterConfiguracao());
-        return await _WsChatGpt.ObterPalavrasSimilares(PalavraChave);
     }
 }

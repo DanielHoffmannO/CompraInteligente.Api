@@ -19,6 +19,6 @@ public class EstimativaController : ControllerBase
     /// Obtém uma lista de Configuração do ChatGpt.
     /// </summary>
     [HttpGet]
-    public async Task<IActionResult> Gerar(byte mes) => Ok(await _estimativaService.GerarEstimativa());
+    public async Task<IActionResult> Gerar(byte mes) => Ok(await _estimativaService.GerarEstimativa(mes));
 
 }

@@ -17,7 +17,7 @@ public class ConfiguracaoProvider : IConfiguracaoProvider
     private CompraInteligenteConfiguracao ObterConfiguracaoRepository()
     {
         var ruleService = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<ICompraInteligenteConfiguracaoRepository>();
-        return /*ruleService?.ObterConfiguracaoVigente() ??*/ new CompraInteligenteConfiguracao();
+        return ruleService?.ObterConfiguracaoVigente() ?? new CompraInteligenteConfiguracao();
     }
 
     public CompraInteligenteConfiguracao ObterConfiguracao() => _configuracao;
