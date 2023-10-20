@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace CompraInteligente.Domain.Entidade;
+
 public class CompraInteligenteConfiguracao : Entity<CompraInteligenteConfiguracao, short>
 {
     public string EmailCadastro { get; set; }

@@ -42,7 +42,7 @@ services.RegisterExternalServices();
 /* SWAGGER */
 services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Senha API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Compra Inteligente Api", Version = "v1" });
 });
 
 var app = builder.Build();

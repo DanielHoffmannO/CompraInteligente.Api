@@ -31,16 +31,7 @@ public class ConfiguracaoService : IConfiguracaoService
             _configuracaoProvider.RecarregarConfiguracao();
             return _senhaGptConfiguracaoRepository.ObterUltimaConfiguracao()?.Id ?? 0;
         }
-        throw new SqlException("Erro ao salvar informação no banco.");
-    }
-
-    public void AtualizarConfiguracao(short id, ConfiguracaoModel model)
-    {
-        var Configuracao = _senhaGptConfiguracaoRepository.GetById(id) ?? throw new SqlException("Filme nao encontrado.");
-
-        Configuracao.Atualizar(model.EmailCadastro, model.ChaveAcesso, model.UrlBase);
-        _senhaGptConfiguracaoRepository.Atualizar(Configuracao);
-        _configuracaoProvider.RecarregarConfiguracao();
+        throw new SqlException("Erro ao salvar configuração no banco.");
     }
 
     private void FinalizarConfiguracaoAnterior()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 namespace CompraInteligente.Domain.Entidade;
+
 public class CompraInteligenteLog : Entity<CompraInteligenteLog, short>
 {
     public CompraInteligenteLog() { }

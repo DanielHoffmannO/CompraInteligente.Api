@@ -26,8 +26,6 @@ public class ConfiguracaoController : ControllerBase
     /// </summary>
     /// <param name="model">Informações da Configuração a ser adicionado.</param>
     [HttpPost]
-    public IActionResult Adicionar(ConfiguracaoModel model)
-    {
-        return Ok(_configuracaoService.AdicionarConfiguracao(model));
-    }
+    public IActionResult Adicionar(ConfiguracaoModel model) => Ok(_configuracaoService.AdicionarConfiguracao(model));
+
 }

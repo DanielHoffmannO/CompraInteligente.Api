@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CompraInteligente.Persistence.Context;
+﻿using CompraInteligente.Persistence.Context;
 using CompraInteligente.Domain.IRepository;
 using CompraInteligente.Domain.Entidade;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompraInteligente.Persistence.Repositories;
 
@@ -12,7 +12,7 @@ public class CompraInteligenteConfiguracaoRepository : Repository<CompraIntelige
     }
 
     public CompraInteligenteConfiguracao ObterConfiguracaoVigente() =>
-        DbSet.FirstOrDefault(x => x.DataVigencia == null);
+        DbSet.FirstOrDefault(x => x.DataVigencia == null) ?? new();
 
     public CompraInteligenteConfiguracao ObterUltimaConfiguracao() =>
         DbSet.OrderByDescending(x => x.Id).FirstOrDefault();

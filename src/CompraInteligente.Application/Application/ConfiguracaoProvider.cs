@@ -7,20 +7,20 @@ namespace CompraInteligente.Application;
 public class ConfiguracaoProvider : IConfiguracaoProvider
 {
     private readonly IServiceProvider _serviceProvider;
-    private CompraInteligenteConfiguracao SenhaGptConfiguracao { get; set; }
+    private CompraInteligenteConfiguracao _configuracao { get; set; }
     public ConfiguracaoProvider(IServiceProvider repository)
     {
         _serviceProvider = repository;
-        SenhaGptConfiguracao = ObterConfiguracaoRepository();
+        _configuracao = ObterConfiguracaoRepository();
     }
 
     private CompraInteligenteConfiguracao ObterConfiguracaoRepository()
     {
         var ruleService = _serviceProvider.CreateScope().ServiceProvider.GetRequiredService<ICompraInteligenteConfiguracaoRepository>();
-        return ruleService?.ObterConfiguracaoVigente() ?? new CompraInteligenteConfiguracao();
+        return /*ruleService?.ObterConfiguracaoVigente() ??*/ new CompraInteligenteConfiguracao();
     }
 
-    public CompraInteligenteConfiguracao ObterConfiguracao() => SenhaGptConfiguracao;
+    public CompraInteligenteConfiguracao ObterConfiguracao() => _configuracao;
 
-    public void RecarregarConfiguracao() => SenhaGptConfiguracao = ObterConfiguracaoRepository();
+    public void RecarregarConfiguracao() => _configuracao = ObterConfiguracaoRepository();
 }
