@@ -5,5 +5,5 @@ namespace CompraInteligente.Domain.IRepository;
 
 public interface ICompraInteligenteLogRepository : IRepository<CompraInteligenteLog, short>
 {
-    void SalvarLista(List<CompraInteligenteLog> senhaGptLog);
+    void SalvarLista(List<CompraInteligenteLog> CompraInteligenteLog);
 }

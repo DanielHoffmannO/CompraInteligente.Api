@@ -2,10 +2,11 @@
 using CompraInteligente.Domain.IRepository;
 using CompraInteligente.Domain.IServices;
 using CompraInteligente.Domain.Entidade;
-using System.Text.Json;
 using CompraInteligente.Domain.Dto;
+using System.Text.Json;
 
 namespace CompraInteligente.Application;
+
 public class EstimativaService : IEstimativaService
 {
     private readonly IConfiguracaoService _configuracaoService;
@@ -23,32 +24,24 @@ public class EstimativaService : IEstimativaService
 
     public async Task<List<EstimativaDto>> GerarEstimativa(byte mes)
     {
-        List<CompraInteligenteLog> log = new() { new("Inicio", $"Mês: {mes}") };
+        List<CompraInteligenteLog> log = new() { new("PayLoad", $"Mês: {mes}/{DateTime.Now.Year + 1}") };
         try
         {
-            _WsChatGpt.InjetarComfiguracao(_configuracaoService.ObterConfiguracao());
             var listHistorico = _historicoRepository.GetAll();
+            _WsChatGpt.InjetarComfiguracao(_configuracaoService.ObterConfiguracao());
             log.Add(new("Histórico", $"QuantidadeHistórico: {listHistorico.Count}"));
 
             var dto = new List<EstimativaDto>();
             foreach (var HistoricoProduto in listHistorico.GroupBy(x => x.Produto).ToList())
             {
-                try
-                {
-                    var produto = HistoricoProduto.First().Produto;
-                    var Quantidade = await _WsChatGpt.EstimarGpt(JsonSerializer.Serialize(HistoricoProduto), mes);
-                    await Task.Delay(100);
-                    log.Add(new("Informação", $"Produto: {produto} || Quantidade: {Quantidade}"));
-                    dto.Add(new(produto, short.Parse(Quantidade.Replace("\n", ""))));
-                }
-                catch (Exception)
-                {
-
-                }
+                var produto = HistoricoProduto.First().Produto;
+                var quantidade = await _WsChatGpt.EstimarGpt(JsonSerializer.Serialize(HistoricoProduto.Where(x => x.DataCadastro.Month == mes)), mes);
+                await Task.Delay(100);
+                log.Add(new("Informação", $"Produto: {produto} || Quantidade: {quantidade}"));
+                dto.Add(new(produto, quantidade));
             }
 
             log.Add(new("Estimativa", $"QuantidadeEstimativa: {dto.Count}"));
-            log.Add(new("Fim", "Fim"));
             _LogRepository.SalvarLista(log);
             return dto;
         }

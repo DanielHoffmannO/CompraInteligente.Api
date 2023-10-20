@@ -6,13 +6,14 @@ using Mapster;
 using CompraInteligente.Domain.Model;
 
 namespace CompraInteligente.Application;
+
 public class ConfiguracaoService : IConfiguracaoService
 {
-    public readonly ICompraInteligenteConfiguracaoRepository _senhaGptConfiguracaoRepository;
+    public readonly ICompraInteligenteConfiguracaoRepository _configuracaoRepository;
     public readonly IConfiguracaoProvider _configuracaoProvider;
-    public ConfiguracaoService(ICompraInteligenteConfiguracaoRepository senhaGptConfiguracaoRepository, IConfiguracaoProvider configuracaoProvider)
+    public ConfiguracaoService(ICompraInteligenteConfiguracaoRepository configuracaoRepository, IConfiguracaoProvider configuracaoProvider)
     {
-        _senhaGptConfiguracaoRepository = senhaGptConfiguracaoRepository;
+        _configuracaoRepository = configuracaoRepository;
         _configuracaoProvider = configuracaoProvider;
     }
 
@@ -25,22 +26,22 @@ public class ConfiguracaoService : IConfiguracaoService
         Configuracao.DataCadastro = DateTime.Now;
 
         FinalizarConfiguracaoAnterior();
-        if (_senhaGptConfiguracaoRepository.Salvar(Configuracao))
+        if (_configuracaoRepository.Salvar(Configuracao))
         { 
 
             _configuracaoProvider.RecarregarConfiguracao();
-            return _senhaGptConfiguracaoRepository.ObterUltimaConfiguracao()?.Id ?? 0;
+            return _configuracaoRepository.ObterUltimaConfiguracao()?.Id ?? 0;
         }
         throw new SqlException("Erro ao salvar configuração no banco.");
     }
 
     private void FinalizarConfiguracaoAnterior()
     {
-        var Configuracao = _senhaGptConfiguracaoRepository.ObterUltimaConfiguracao();
+        var Configuracao = _configuracaoRepository.ObterUltimaConfiguracao();
         if (Configuracao is not null)
         {
             Configuracao.DataVigencia = DateTime.Now;
-            _senhaGptConfiguracaoRepository.Atualizar(Configuracao);
+            _configuracaoRepository.Atualizar(Configuracao);
         }
     }
 }

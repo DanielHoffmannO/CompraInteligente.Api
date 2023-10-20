@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Security.Authentication;
 using CompraInteligente.Domain.IServices;
+using System.Security.Authentication;
 using Polly.Extensions.Http;
 using Polly.Timeout;
 using Polly;
 
 namespace CompraInteligente.ExternalServices.Configuration;
+
 public static class DependencyInjection
 {
     public static IServiceCollection RegisterExternalServices(this IServiceCollection services)

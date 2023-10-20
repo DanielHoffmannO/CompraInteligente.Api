@@ -4,6 +4,6 @@ namespace CompraInteligente.Domain.IServices;
 
 public interface IWsChatGpt
 {
-    Task<string> EstimarGpt(string json, byte mes);
+    Task<byte> EstimarGpt(string json, byte mes);
     void InjetarComfiguracao(CompraInteligenteConfiguracao config);
 }

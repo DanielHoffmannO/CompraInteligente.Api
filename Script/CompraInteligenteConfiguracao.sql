@@ -1,12 +1,3 @@
-USE [Senha]
-GO
-
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 CREATE TABLE [dbo].[CompraInteligenteConfiguracao](
 	[Id] [smallint] IDENTITY(1,1) NOT NULL,
 	[EmailCadastro] [varchar](100) NOT NULL,

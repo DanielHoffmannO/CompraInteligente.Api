@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CompraInteligente.Domain.Model;
-using CompraInteligente.Domain.IApplication;
+﻿using CompraInteligente.Domain.IApplication;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CompraInteligente.Api.Controllers;
 

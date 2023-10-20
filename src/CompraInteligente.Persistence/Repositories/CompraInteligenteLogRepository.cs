@@ -11,9 +11,9 @@ public class CompraInteligenteLogRepository : Repository<CompraInteligenteLog, s
     {
     }
 
-    public void SalvarLista(List<CompraInteligenteLog> senhaGptLog)
+    public void SalvarLista(List<CompraInteligenteLog> CompraInteligenteLog)
     {
-        Db.AddRange(senhaGptLog);
+        Db.AddRange(CompraInteligenteLog);
         Db.Commit();
     }
 }

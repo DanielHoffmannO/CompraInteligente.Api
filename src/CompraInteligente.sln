@@ -6,7 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{28797E1F-8AA8-4EA6-AF18-13F4BE4B5CCF}"
 	ProjectSection(SolutionItems) = preProject
 		..\Script\CompraInteligenteConfiguracao.sql = ..\Script\CompraInteligenteConfiguracao.sql
-		CompraInteligenteHistorico.sql = CompraInteligenteHistorico.sql
+		..\Script\CompraInteligenteHistorico.sql = ..\Script\CompraInteligenteHistorico.sql
 		..\Script\CompraInteligenteLog.sql = ..\Script\CompraInteligenteLog.sql
 	EndProjectSection
 EndProject

@@ -21,22 +21,20 @@ public class WsChatGpt : IWsChatGpt
         _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {config.ChaveAcesso}");
     }
 
-    public async Task<string> EstimarGpt(string json, byte mes)
+    public async Task<byte> EstimarGpt(string json, byte mes)
     {
         try
         {
+            string prompt = $@"Me Forneça apenas um numero da suposição numérica da quantidade 
+                    do produto que será comprada apenas na data {mes}/{DateTime.Now.Year + 1}. A suposição 
+                    deve considerar os dados fornecidos no JSON {json}e levar em conta uma possível 
+                    tendência anual de aumento ou diminuição.";
+
             var requestData = new
             {
                 model = "text-davinci-003",
-                prompt = $@"Isso é uma requisicao de back-end por isso DEVE ME ENVIAR APENAS UM NUMERO 
-                            Com base no Json enviado {json}, 
-                            me forneça uma nova suposição da
-                            quantidade do produto que será comprada 
-                            em {mes}/{DateTime.Now.Year + 1}. 
-                            A estimativa deve considerar os dados
-                            fornecidos no JSON e levar em conta 
-                            uma possível tendência anual de aumento ou diminuição.",
-                max_tokens = 50,
+                prompt = prompt,
+                max_tokens = 10,
                 temperature = 1,
             };
 
@@ -44,16 +42,22 @@ public class WsChatGpt : IWsChatGpt
 
             if (response.IsSuccessStatusCode)
             {
-                var responseObject = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
-                return responseObject?.choices[0].text ?? "";
+                try
+                {
+                    var responseObject = JsonConvert.DeserializeObject<dynamic>(await response.Content.ReadAsStringAsync());
+                    var retorno = $"{responseObject?.choices[0].text ?? ""}";
+                    return byte.Parse(retorno.Where(char.IsDigit).ToArray());
+                }
+                catch (Exception)
+                {
+                    return 5;
+                }
             }
 
-            return "5";
             throw new GptException("Erro ao integrar com chat gpt.");
         }
         catch (Exception)
         {
-            return "5";
             throw new GptException("Erro ao integrar com chat gpt.");
         }
     }

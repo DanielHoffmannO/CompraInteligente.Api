@@ -7,7 +7,8 @@ public class CompraInteligenteLog : Entity<CompraInteligenteLog, short>
     public CompraInteligenteLog() { }
     public CompraInteligenteLog(string descricao, string log)
     {
-        Log = log.Length <= 600 ? log : log[..600];
+        Console.WriteLine($"{descricao}: {log}");
+        this.Log = log.Length <= 600 ? log : log[..600];
         Descricao = descricao.Length <= 50 ? descricao : descricao[..600];
         Data = DateTime.Now;
     }

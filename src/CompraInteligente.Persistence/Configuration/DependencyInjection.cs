@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace CompraInteligente.Persistence.Configuration;
+
 public static class DependencyInjection
 {
     public static IServiceCollection RegisterPersistence(this IServiceCollection services, IConfiguration configuration) =>

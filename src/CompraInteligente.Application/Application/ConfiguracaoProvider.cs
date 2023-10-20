@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using CompraInteligente.Domain.Entidade;
 using CompraInteligente.Domain.IApplication;
 using CompraInteligente.Domain.IRepository;
+using CompraInteligente.Domain.Entidade;
 
 namespace CompraInteligente.Application;
+
 public class ConfiguracaoProvider : IConfiguracaoProvider
 {
     private readonly IServiceProvider _serviceProvider;

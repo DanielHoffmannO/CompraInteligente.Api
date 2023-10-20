@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CompraInteligente.Persistence.Context;
+﻿using CompraInteligente.Persistence.Context;
 using CompraInteligente.Domain.IRepository;
 using CompraInteligente.Domain.Entidade;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompraInteligente.Persistence.Repositories;
 

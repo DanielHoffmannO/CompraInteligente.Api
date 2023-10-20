@@ -1,4 +1,5 @@
 ﻿namespace CompraInteligente.Domain.Exceptions;
+
 [Serializable]
 public class GptException : InvalidOperationException
 {
